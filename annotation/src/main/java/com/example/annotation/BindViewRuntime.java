@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.FIELD)
-public @interface BindView {
+public @interface BindViewRuntime {
     int value() default -1;
 }

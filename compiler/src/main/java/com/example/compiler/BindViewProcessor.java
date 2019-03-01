@@ -12,7 +12,9 @@ import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
@@ -48,12 +50,16 @@ public class BindViewProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
         Set<? extends Element> re = roundEnvironment.getElementsAnnotatedWith(BindView.class);
         for (Element element : re) {
-            String name = element.getSimpleName().toString()+"22222222222";
-            note(element, name);
-        }
-        for (TypeElement element : set) {
-            String name = element.getQualifiedName().toString()+"111111111111";
-            note(element, name);
+            VariableElement variableElement = (VariableElement) element;
+            TypeElement classElement = (TypeElement) element.getEnclosingElement();
+            PackageElement packageElement = elementUtil.getPackageOf(classElement);
+
+            String className = classElement.getSimpleName().toString();
+            String packageName = packageElement.getQualifiedName().toString();
+            String variableName = variableElement.getSimpleName().toString();
+            note(element, "className=" + className);
+            note(element, "packageName=" + packageName);
+            note(element, "variableName=" + variableName);
         }
         return false;
     }

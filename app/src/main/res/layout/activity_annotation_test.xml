@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <TextView
+        android:id="@+id/runtime_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="70dp"
+        android:background="@color/blue_grey"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Runtime ADD" />
+
+    <TextView
+        android:id="@+id/runtime_sum_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/blue_grey"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/compile_add_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/teal"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Compile ADD" />
+
+    <TextView
+        android:id="@+id/compile_sum_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/teal"
+        android:textSize="25sp" />
+</LinearLayout>

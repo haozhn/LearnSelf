@@ -7,10 +7,14 @@
     android:paddingRight="16dp"
     tools:context=".MainActivity">
 
-    <Button
+    <TextView
+        android:layout_marginTop="20dp"
+        android:background="@color/blue"
         android:id="@+id/annotation_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Java Annotation" />
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Annotation" />
 
 </LinearLayout>
