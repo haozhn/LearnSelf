@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.example.hao.learnself.date_2018_12_28.AnnotationTestActivity;
+import com.example.hao.learnself.date_2018_12_28.annotation.TestAnnotation;
+
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
     @Override
