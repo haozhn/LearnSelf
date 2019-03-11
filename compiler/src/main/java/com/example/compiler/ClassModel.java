@@ -1,32 +1,55 @@
 package com.example.compiler;
 
-import com.example.annotation.BindView;
+import com.example.annotation.BindViewCompiler;
+import com.example.annotation.OnClickCompiler;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashSet;
 
 import javax.annotation.processing.Filer;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.tools.JavaFileObject;
 
 public class ClassModel {
+    /**
+     * 成员变量
+     */
     private HashSet<VariableElement> variableElements;
+    /**
+     * 类方法
+     */
+    private HashSet<ExecutableElement> executableElements;
+    /**
+     * 包
+     */
     private PackageElement packageElement;
+    /**
+     * 类
+     */
     private TypeElement classElement;
 
-    public ClassModel(PackageElement packageElement, TypeElement classElement) {
-        this.packageElement = packageElement;
+    public ClassModel(TypeElement classElement) {
         this.classElement = classElement;
+        packageElement = (PackageElement) classElement.getEnclosingElement();
         variableElements = new HashSet<>();
+        executableElements = new HashSet<>();
     }
 
-    public void addElement(VariableElement element) {
+    public void addVariableElement(VariableElement element) {
         variableElements.add(element);
     }
 
+    public void addExecutableElement(ExecutableElement element) {
+        executableElements.add(element);
+    }
+
+    /**
+     * 生成Java文件
+     */
     public void generateJavaFile(Filer filer) {
         try {
             JavaFileObject jfo = filer.createSourceFile(classElement.getQualifiedName() + "$$view_binding");
@@ -83,9 +106,17 @@ public class ClassModel {
                 .append("(").append(classElement.getSimpleName()).append(" target, ").append("View view) {\n");
         stringBuilder.append("this.target = target;\n");
         for (VariableElement element : variableElements) {
-            int resId = element.getAnnotation(BindView.class).value();
+            int resId = element.getAnnotation(BindViewCompiler.class).value();
             stringBuilder.append("target.").append(element.getSimpleName()).append(" = (").append(element.asType().toString())
                     .append(")view.findViewById(").append(resId).append(");\n");
+        }
+
+        for (ExecutableElement element : executableElements) {
+            int resId = element.getAnnotation(OnClickCompiler.class).value();
+            stringBuilder.append("view.findViewById(").append(resId).append(").setOnClickListener(new View.OnClickListener() {\n")
+                    .append("@Override\n").append("public void onClick(View v) {\n")
+                    .append("target.").append(element.getSimpleName()).append("();\n")
+                    .append("}\n});\n");
         }
         stringBuilder.append("}");
         return stringBuilder.toString();

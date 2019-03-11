@@ -1,7 +1,6 @@
-package com.example.hao.learnself;
+package com.example.hao.learnself.date_2018_12_28;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.example.hao.learnself.date_2018_12_28.annotation.BindViewRuntime;
