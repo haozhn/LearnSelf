@@ -14,7 +14,6 @@ public class Injection {
         inject(target, target.getWindow().getDecorView());
     }
 
-
     public static void inject(@NonNull Object target, @NonNull View view) {
         String className = target.getClass().getName();
         try {
