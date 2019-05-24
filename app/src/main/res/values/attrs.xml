@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BlurView">
+        <attr name="overlayColor" format="color"/>
+        <attr name="offset" format="dimension"/>
+        <attr name="radius" format="integer"/>
+        <attr name="scale" format="integer"/>
+    </declare-styleable>
+</resources>

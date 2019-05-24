@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".date_2018_12_28.AnnotationTestActivity"/>
+        <activity android:name=".date_2019_3_27.GaussianBlurActivity"/>
     </application>
 
 </manifest>
