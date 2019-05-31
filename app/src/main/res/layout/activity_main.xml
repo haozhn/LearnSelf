@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
+    android:orientation="vertical"
     android:paddingRight="16dp"
     tools:context=".MainActivity">
 
@@ -16,5 +17,15 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:text="Annotation" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:background="@color/blue"
+        android:id="@+id/blur_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Blur" />
 
 </LinearLayout>
