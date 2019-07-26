@@ -28,4 +28,14 @@
         android:textColor="@color/white"
         android:text="Blur" />
 
+    <TextView
+        android:layout_marginTop="20dp"
+        android:background="@color/blue"
+        android:id="@+id/lock_screen_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Lock Screen" />
+
 </LinearLayout>

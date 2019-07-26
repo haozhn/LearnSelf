@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.annotation.TestCompiler;
 import com.example.hao.learnself.date_2018_12_28.AnnotationTestActivity;
 import com.example.hao.learnself.date_2019_3_27.GaussianBlurActivity;
+import com.example.hao.learnself.date_2019_7_26.LockScreenActivity;
 
 @TestCompiler
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
@@ -18,6 +19,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
         findViewById(R.id.annotation_btn).setOnClickListener(this);
         findViewById(R.id.blur_btn).setOnClickListener(this);
+        findViewById(R.id.lock_screen_btn).setOnClickListener(this);
     }
 
     @Override
@@ -28,6 +30,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.blur_btn:
                 startActivity(new Intent(this, GaussianBlurActivity.class));
+                break;
+            case R.id.lock_screen_btn:
+                startActivity(new Intent(this, LockScreenActivity.class));
                 break;
         }
     }
