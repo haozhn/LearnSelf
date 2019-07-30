@@ -5,11 +5,13 @@
     android:background="@color/white">
 
     <com.example.hao.learnself.date_2019_7_26.GestureLockView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:background="#cccccc" />
 
 </RelativeLayout>
