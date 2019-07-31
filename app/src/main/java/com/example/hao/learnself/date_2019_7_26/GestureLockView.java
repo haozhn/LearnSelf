@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -18,6 +19,13 @@ public class GestureLockView extends View {
     private int mRadius;
     private Cell[][] mCells;
     private LinkedList<Cell> selectCells;
+    private float currentX;
+    private float currentY;
+    private Path path;
+    private int unselectedPointColor;
+    private int selectedPointColor;
+    private int pathColor;
+    private int circleColor;
 
     public GestureLockView(Context context) {
         this(context, null);
@@ -34,10 +42,6 @@ public class GestureLockView extends View {
 
     private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeWidth(Util.dp2px(getContext(), 10));
         mRadius = Util.dp2px(getContext(), 30);
         mCells = new Cell[3][3];
         for (int i = 0; i < 3; i++) {
@@ -46,19 +50,11 @@ public class GestureLockView extends View {
             }
         }
         selectCells = new LinkedList<>();
-    }
-
-    private void setPointPaint() {
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setStrokeWidth(Util.dp2px(getContext(), 10));
-    }
-
-    private void setCirclePaint() {
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(Util.dp2px(getContext(), 1));
+        path = new Path();
+        unselectedPointColor = Color.parseColor("#d4e0eb");
+        selectedPointColor = Color.parseColor("#5a9ade");
+        pathColor = Color.parseColor("#5a9ade");
+        circleColor = Color.parseColor("#e9f1fa");
     }
 
     @Override
@@ -79,18 +75,49 @@ public class GestureLockView extends View {
         }
     }
 
+    private void setPointPaint(boolean selected) {
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        mPaint.setStrokeWidth(Util.dp2px(getContext(), 10));
+        mPaint.setColor(selected ? selectedPointColor : unselectedPointColor);
+    }
+
+    private void setPathPaint() {
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(Util.dp2px(getContext(), 2));
+        mPaint.setColor(pathColor);
+    }
+
+    private void setCirclePaint() {
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setColor(circleColor);
+    }
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        setPointPaint();
+        setPointPaint(false);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 canvas.drawPoint(mCells[i][j].x, mCells[i][j].y, mPaint);
             }
         }
-        setCirclePaint();
+
         for (Cell cell : selectCells) {
+            setCirclePaint();
             canvas.drawCircle(cell.x, cell.y, mRadius, mPaint);
+            setPointPaint(true);
+            canvas.drawPoint(cell.x, cell.y, mPaint);
+        }
+
+        if (selectCells.size() > 1) {
+            setPathPaint();
+            canvas.drawPath(path, mPaint);
+        }
+
+        if (selectCells.size() > 0) {
+            setPathPaint();
+            canvas.drawLine(selectCells.get(selectCells.size() - 1).x, selectCells.get(selectCells.size() - 1).y, currentX, currentY, mPaint);
         }
     }
 
@@ -104,6 +131,7 @@ public class GestureLockView extends View {
                 handleActionMove(event);
                 return true;
             case MotionEvent.ACTION_UP:
+                handleActionUp(event);
                 return true;
             case MotionEvent.ACTION_CANCEL:
                 return true;
@@ -111,8 +139,9 @@ public class GestureLockView extends View {
         return super.onTouchEvent(event);
     }
 
-    private void reset() {
+    private void clear() {
         selectCells.clear();
+        path.rewind();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 mCells[i][j].selected = false;
@@ -122,11 +151,16 @@ public class GestureLockView extends View {
     }
 
     private void handleActionDown(MotionEvent event) {
-        reset();
-        final float x = event.getX();
-        final float y = event.getY();
-        final Cell cell = getHitCell(x, y);
-        if (cell != null) {
+        clear();
+        currentX = event.getX();
+        currentY = event.getY();
+        final Cell cell = getHitCell(currentX,  currentY);
+        if (cell != null && !cell.selected) {
+            if (selectCells.size() <= 0) {
+                path.moveTo(cell.x, cell.y);
+            } else {
+                path.lineTo(cell.x, cell.y);
+            }
             cell.selected = true;
             selectCells.add(cell);
             invalidate();
@@ -134,14 +168,23 @@ public class GestureLockView extends View {
     }
 
     private void handleActionMove(MotionEvent event) {
-        final float x = event.getX();
-        final float y = event.getY();
-        final Cell cell = getHitCell(x, y);
-        if (cell != null) {
+        currentX = event.getX();
+        currentY = event.getY();
+        final Cell cell = getHitCell(currentX, currentY);
+        if (cell != null && !cell.selected) {
+            if (selectCells.size() <= 0) {
+                path.moveTo(cell.x, cell.y);
+            } else {
+                path.lineTo(cell.x, cell.y);
+            }
             cell.selected = true;
             selectCells.add(cell);
-            invalidate();
         }
+        invalidate();
+    }
+
+    private void handleActionUp(MotionEvent event) {
+
     }
 
     private Cell getHitCell(float x, float y) {

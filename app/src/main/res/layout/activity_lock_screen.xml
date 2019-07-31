@@ -11,7 +11,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:background="#cccccc" />
+        android:layout_marginRight="50dp" />
 
 </RelativeLayout>
