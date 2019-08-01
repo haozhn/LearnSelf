@@ -15,9 +15,9 @@ import com.example.hao.learnself.Util;
 import java.util.LinkedList;
 
 public class GestureLockView extends View {
-    private Paint mPaint;
-    private int mRadius;
-    private Cell[][] mCells;
+    private Paint paint;
+    private int radius;
+    private Cell[][] cells;
     private LinkedList<Cell> selectCells;
     private float currentX;
     private float currentY;
@@ -25,7 +25,11 @@ public class GestureLockView extends View {
     private int unselectedPointColor;
     private int selectedPointColor;
     private int pathColor;
+    private int errorColor;
     private int circleColor;
+    private boolean error;
+    private boolean done;
+    private GestureLockListener listener;
 
     public GestureLockView(Context context) {
         this(context, null);
@@ -41,12 +45,13 @@ public class GestureLockView extends View {
     }
 
     private void init() {
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mRadius = Util.dp2px(getContext(), 30);
-        mCells = new Cell[3][3];
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        radius = Util.dp2px(getContext(), 30);
+        cells = new Cell[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                mCells[i][j] = new Cell(0, 0);
+                cells[i][j] = new Cell(0, 0);
+                cells[i][j].pos = 3 * i + j + 1;
             }
         }
         selectCells = new LinkedList<>();
@@ -54,7 +59,10 @@ public class GestureLockView extends View {
         unselectedPointColor = Color.parseColor("#d4e0eb");
         selectedPointColor = Color.parseColor("#5a9ade");
         pathColor = Color.parseColor("#5a9ade");
+        errorColor = Color.RED;
         circleColor = Color.parseColor("#e9f1fa");
+        done = false;
+        error = false;
     }
 
     @Override
@@ -64,33 +72,33 @@ public class GestureLockView extends View {
         final int heightSize = getMeasuredHeight();
         final int size = Math.min(widthSize, heightSize);
         setMeasuredDimension(size, size);
-        mRadius = Math.min(size / 6, mRadius);
+        radius = Math.min(size / 6, radius);
 
-        int[] n = {mRadius, size / 2, size - mRadius};
+        int[] n = {radius, size / 2, size - radius};
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                mCells[i][j].x = n[j];
-                mCells[i][j].y = n[i];
+                cells[i][j].x = n[j];
+                cells[i][j].y = n[i];
             }
         }
     }
 
     private void setPointPaint(boolean selected) {
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(Util.dp2px(getContext(), 10));
-        mPaint.setColor(selected ? selectedPointColor : unselectedPointColor);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeWidth(Util.dp2px(getContext(), 10));
+        paint.setColor(selected ? (error ? errorColor : selectedPointColor) : unselectedPointColor);
     }
 
     private void setPathPaint() {
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(Util.dp2px(getContext(), 2));
-        mPaint.setColor(pathColor);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(Util.dp2px(getContext(), 2));
+        paint.setColor(error ? errorColor : pathColor);
     }
 
     private void setCirclePaint() {
-        mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(circleColor);
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(circleColor);
     }
 
     @Override
@@ -99,25 +107,25 @@ public class GestureLockView extends View {
         setPointPaint(false);
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                canvas.drawPoint(mCells[i][j].x, mCells[i][j].y, mPaint);
+                canvas.drawPoint(cells[i][j].x, cells[i][j].y, paint);
             }
         }
 
         for (Cell cell : selectCells) {
             setCirclePaint();
-            canvas.drawCircle(cell.x, cell.y, mRadius, mPaint);
+            canvas.drawCircle(cell.x, cell.y, radius, paint);
             setPointPaint(true);
-            canvas.drawPoint(cell.x, cell.y, mPaint);
+            canvas.drawPoint(cell.x, cell.y, paint);
         }
 
         if (selectCells.size() > 1) {
             setPathPaint();
-            canvas.drawPath(path, mPaint);
+            canvas.drawPath(path, paint);
         }
 
-        if (selectCells.size() > 0) {
+        if (selectCells.size() > 0 && !done) {
             setPathPaint();
-            canvas.drawLine(selectCells.get(selectCells.size() - 1).x, selectCells.get(selectCells.size() - 1).y, currentX, currentY, mPaint);
+            canvas.drawLine(selectCells.get(selectCells.size() - 1).x, selectCells.get(selectCells.size() - 1).y, currentX, currentY, paint);
         }
     }
 
@@ -134,73 +142,93 @@ public class GestureLockView extends View {
                 handleActionUp(event);
                 return true;
             case MotionEvent.ACTION_CANCEL:
+                clear();
                 return true;
         }
         return super.onTouchEvent(event);
     }
 
     private void clear() {
+        done = false;
+        error = false;
         selectCells.clear();
         path.rewind();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                mCells[i][j].selected = false;
+                cells[i][j].selected = false;
             }
         }
         invalidate();
+    }
+
+    private void checkAndAdd(float x, float y) {
+        Cell cell = null;
+        boolean find = false;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (Math.pow(x - cells[i][j].x, 2) + Math.pow(y - cells[i][j].y, 2) < radius * radius) {
+                    cell = cells[i][j];
+                    find = true;
+                    break;
+                }
+            }
+            if (find) {
+                break;
+            }
+        }
+        if (find && !cell.selected) {
+            cell.selected = true;
+            if (selectCells.size() <= 0) {
+                path.moveTo(cell.x, cell.y);
+            } else {
+                path.lineTo(cell.x, cell.y);
+            }
+            selectCells.add(cell);
+            if (listener != null) {
+                listener.onCellAdd();
+            }
+        }
     }
 
     private void handleActionDown(MotionEvent event) {
         clear();
         currentX = event.getX();
         currentY = event.getY();
-        final Cell cell = getHitCell(currentX,  currentY);
-        if (cell != null && !cell.selected) {
-            if (selectCells.size() <= 0) {
-                path.moveTo(cell.x, cell.y);
-            } else {
-                path.lineTo(cell.x, cell.y);
-            }
-            cell.selected = true;
-            selectCells.add(cell);
-            invalidate();
+        if (listener != null) {
+            listener.onStart();
         }
+        checkAndAdd(currentX, currentY);
     }
 
     private void handleActionMove(MotionEvent event) {
         currentX = event.getX();
         currentY = event.getY();
-        final Cell cell = getHitCell(currentX, currentY);
-        if (cell != null && !cell.selected) {
-            if (selectCells.size() <= 0) {
-                path.moveTo(cell.x, cell.y);
-            } else {
-                path.lineTo(cell.x, cell.y);
-            }
-            cell.selected = true;
-            selectCells.add(cell);
-        }
+        checkAndAdd(currentX, currentY);
         invalidate();
     }
 
     private void handleActionUp(MotionEvent event) {
-
-    }
-
-    private Cell getHitCell(float x, float y) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (Math.pow(x - mCells[i][j].x, 2) + Math.pow(y - mCells[i][j].y, 2) < mRadius * mRadius) {
-                    return mCells[i][j];
-                }
+        done = true;
+        if (listener != null && selectCells.size() > 0) {
+            int[] pas = new int[selectCells.size()];
+            for (int i = 0; i < pas.length; i++) {
+                pas[i] = selectCells.get(i).pos;
+            }
+            boolean success = listener.onFinish(pas);
+            if (success) {
+                listener.onSuccess(pas);
+            } else {
+                error = true;
+                listener.onError(pas);
             }
         }
-        return null;
+        invalidate();
     }
 
     private class Cell {
         int x;
         int y;
+        int pos;
         boolean selected;
 
         Cell(int x, int y) {
@@ -208,5 +236,21 @@ public class GestureLockView extends View {
             this.y = y;
             selected = false;
         }
+    }
+
+    public void setGestureLockListener(GestureLockListener l) {
+        this.listener = l;
+    }
+
+    public interface GestureLockListener {
+        void onStart();
+
+        void onCellAdd();
+
+        boolean onFinish(int[] pas);
+
+        void onSuccess(int[] pas);
+
+        void onError(int[] pas);
     }
 }

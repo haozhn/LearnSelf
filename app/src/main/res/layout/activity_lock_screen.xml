@@ -4,7 +4,17 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <TextView
+        android:id="@+id/lock_desc"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <com.example.hao.learnself.date_2019_7_26.GestureLockView
+        android:id="@+id/lock_screen_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
