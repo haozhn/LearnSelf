@@ -6,4 +6,13 @@
         <attr name="radius" format="integer"/>
         <attr name="scale" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="GestureLockView">
+        <attr name="radius" format="dimension"/>
+        <attr name="pointColor" format="color"/>
+        <attr name="circleColor" format="color"/>
+        <attr name="pathColor" format="color"/>
+        <attr name="errorPathColor" format="color"/>
+        <attr name="errorCircleColor" format="color"/>
+    </declare-styleable>
 </resources>

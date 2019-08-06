@@ -1,31 +1,33 @@
 package com.example.hao.learnself.date_2019_7_26;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.hao.learnself.R;
 import com.example.hao.learnself.Util;
 
 import java.util.LinkedList;
 
 public class GestureLockView extends View {
     private Paint paint;
-    private int radius;
+    private float radius;
     private Cell[][] cells;
     private LinkedList<Cell> selectCells;
     private float currentX;
     private float currentY;
     private Path path;
-    private int unselectedPointColor;
-    private int selectedPointColor;
+    private int pointColor;
     private int pathColor;
-    private int errorColor;
+    private int errorPathColor;
+    private int errorCircleColor;
     private int circleColor;
     private boolean error;
     private boolean done;
@@ -41,12 +43,19 @@ public class GestureLockView extends View {
 
     public GestureLockView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GestureLockView);
+        pointColor = a.getColor(R.styleable.GestureLockView_pointColor, ContextCompat.getColor(context, R.color.pointColor));
+        pathColor = a.getColor(R.styleable.GestureLockView_pathColor, ContextCompat.getColor(context, R.color.pathColor));
+        circleColor = a.getColor(R.styleable.GestureLockView_circleColor, ContextCompat.getColor(context, R.color.circleColor));
+        errorPathColor = a.getColor(R.styleable.GestureLockView_errorPathColor, ContextCompat.getColor(context, R.color.errorPathColor));
+        errorCircleColor = a.getColor(R.styleable.GestureLockView_errorCircleColor, ContextCompat.getColor(context, R.color.errorCircleColor));
+        radius = a.getDimension(R.styleable.GestureLockView_radius, Util.dp2px(context, 30));
+        a.recycle();
         init();
     }
 
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        radius = Util.dp2px(getContext(), 30);
         cells = new Cell[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -56,11 +65,6 @@ public class GestureLockView extends View {
         }
         selectCells = new LinkedList<>();
         path = new Path();
-        unselectedPointColor = Color.parseColor("#d4e0eb");
-        selectedPointColor = Color.parseColor("#5a9ade");
-        pathColor = Color.parseColor("#5a9ade");
-        errorColor = Color.RED;
-        circleColor = Color.parseColor("#e9f1fa");
         done = false;
         error = false;
     }
@@ -72,9 +76,9 @@ public class GestureLockView extends View {
         final int heightSize = getMeasuredHeight();
         final int size = Math.min(widthSize, heightSize);
         setMeasuredDimension(size, size);
-        radius = Math.min(size / 6, radius);
+        radius = Math.min(size / 6f, radius);
 
-        int[] n = {radius, size / 2, size - radius};
+        float[] n = {radius, size / 2f, size - radius};
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 cells[i][j].x = n[j];
@@ -87,18 +91,18 @@ public class GestureLockView extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeWidth(Util.dp2px(getContext(), 10));
-        paint.setColor(selected ? (error ? errorColor : selectedPointColor) : unselectedPointColor);
+        paint.setColor(selected ? (error ? errorPathColor : pathColor) : pointColor);
     }
 
     private void setPathPaint() {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(Util.dp2px(getContext(), 2));
-        paint.setColor(error ? errorColor : pathColor);
+        paint.setColor(error ? errorPathColor : pathColor);
     }
 
     private void setCirclePaint() {
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(circleColor);
+        paint.setColor(error ? errorCircleColor : circleColor);
     }
 
     @Override
@@ -185,7 +189,7 @@ public class GestureLockView extends View {
             }
             selectCells.add(cell);
             if (listener != null) {
-                listener.onCellAdd();
+                listener.onCellAdd(getPas());
             }
         }
     }
@@ -210,10 +214,7 @@ public class GestureLockView extends View {
     private void handleActionUp(MotionEvent event) {
         done = true;
         if (listener != null && selectCells.size() > 0) {
-            int[] pas = new int[selectCells.size()];
-            for (int i = 0; i < pas.length; i++) {
-                pas[i] = selectCells.get(i).pos;
-            }
+            int[] pas = getPas();
             boolean success = listener.onFinish(pas);
             if (success) {
                 listener.onSuccess(pas);
@@ -225,9 +226,20 @@ public class GestureLockView extends View {
         invalidate();
     }
 
+    private int[] getPas() {
+        if (selectCells != null && selectCells.size() > 0) {
+            int[] result = new int[selectCells.size()];
+            for (int i = 0; i < result.length; i++) {
+                result[i] = selectCells.get(i).pos;
+            }
+            return result;
+        }
+        return null;
+    }
+
     private class Cell {
-        int x;
-        int y;
+        float x;
+        float y;
         int pos;
         boolean selected;
 
@@ -245,7 +257,7 @@ public class GestureLockView extends View {
     public interface GestureLockListener {
         void onStart();
 
-        void onCellAdd();
+        void onCellAdd(int[] pas);
 
         boolean onFinish(int[] pas);
 

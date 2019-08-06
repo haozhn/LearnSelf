@@ -23,13 +23,13 @@ public class LockScreenActivity extends Activity {
             }
 
             @Override
-            public void onCellAdd() {
+            public void onCellAdd(int[] pas) {
 
             }
 
             @Override
             public boolean onFinish(int[] pas) {
-                return true;
+                return false;
             }
 
             @Override
