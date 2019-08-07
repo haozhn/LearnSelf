@@ -24,7 +24,10 @@ public class GestureLockView extends View {
     private float currentX;
     private float currentY;
     private Path path;
+    private float pointSize;
     private int pointColor;
+    private int selectPointColor;
+    private int errorPointColor;
     private int pathColor;
     private int errorPathColor;
     private int errorCircleColor;
@@ -45,11 +48,14 @@ public class GestureLockView extends View {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.GestureLockView);
         pointColor = a.getColor(R.styleable.GestureLockView_pointColor, ContextCompat.getColor(context, R.color.pointColor));
+        selectPointColor = a.getColor(R.styleable.GestureLockView_selectPointColor, ContextCompat.getColor(context, R.color.selectPointColor));
+        errorPointColor = a.getColor(R.styleable.GestureLockView_errorPointColor, ContextCompat.getColor(context, R.color.errorPointColor));
         pathColor = a.getColor(R.styleable.GestureLockView_pathColor, ContextCompat.getColor(context, R.color.pathColor));
-        circleColor = a.getColor(R.styleable.GestureLockView_circleColor, ContextCompat.getColor(context, R.color.circleColor));
         errorPathColor = a.getColor(R.styleable.GestureLockView_errorPathColor, ContextCompat.getColor(context, R.color.errorPathColor));
+        circleColor = a.getColor(R.styleable.GestureLockView_circleColor, ContextCompat.getColor(context, R.color.circleColor));
         errorCircleColor = a.getColor(R.styleable.GestureLockView_errorCircleColor, ContextCompat.getColor(context, R.color.errorCircleColor));
         radius = a.getDimension(R.styleable.GestureLockView_radius, Util.dp2px(context, 30));
+        pointSize = a.getDimension(R.styleable.GestureLockView_pointSize, Util.dp2px(context, 10));
         a.recycle();
         init();
     }
@@ -90,8 +96,8 @@ public class GestureLockView extends View {
     private void setPointPaint(boolean selected) {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(Util.dp2px(getContext(), 10));
-        paint.setColor(selected ? (error ? errorPathColor : pathColor) : pointColor);
+        paint.setStrokeWidth(pointSize);
+        paint.setColor(selected ? (error ? errorPointColor : selectPointColor) : pointColor);
     }
 
     private void setPathPaint() {
@@ -103,6 +109,16 @@ public class GestureLockView extends View {
     private void setCirclePaint() {
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(error ? errorCircleColor : circleColor);
+    }
+
+    public void setGesture(int[] ges) {
+        selectCells.clear();
+        for (int g : ges) {
+            if (g > 0) {
+                selectCells.add(cells[(g - 1) / 3][(g - 1) % 3]);
+            }
+        }
+        invalidate();
     }
 
     @Override
@@ -152,7 +168,7 @@ public class GestureLockView extends View {
         return super.onTouchEvent(event);
     }
 
-    private void clear() {
+    public void clear() {
         done = false;
         error = false;
         selectCells.clear();
@@ -189,7 +205,7 @@ public class GestureLockView extends View {
             }
             selectCells.add(cell);
             if (listener != null) {
-                listener.onCellAdd(getPas());
+                listener.onCellAdd(getGes());
             }
         }
     }
@@ -214,7 +230,7 @@ public class GestureLockView extends View {
     private void handleActionUp(MotionEvent event) {
         done = true;
         if (listener != null && selectCells.size() > 0) {
-            int[] pas = getPas();
+            int[] pas = getGes();
             boolean success = listener.onFinish(pas);
             if (success) {
                 listener.onSuccess(pas);
@@ -226,7 +242,7 @@ public class GestureLockView extends View {
         invalidate();
     }
 
-    private int[] getPas() {
+    private int[] getGes() {
         if (selectCells != null && selectCells.size() > 0) {
             int[] result = new int[selectCells.size()];
             for (int i = 0; i < result.length; i++) {
@@ -257,12 +273,12 @@ public class GestureLockView extends View {
     public interface GestureLockListener {
         void onStart();
 
-        void onCellAdd(int[] pas);
+        void onCellAdd(int[] ges);
 
-        boolean onFinish(int[] pas);
+        boolean onFinish(int[] ges);
 
-        void onSuccess(int[] pas);
+        void onSuccess(int[] ges);
 
-        void onError(int[] pas);
+        void onError(int[] ges);
     }
 }

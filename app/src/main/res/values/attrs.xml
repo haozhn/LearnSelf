@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="radius" format="dimension|integer"/>
     <declare-styleable name="BlurView">
         <attr name="overlayColor" format="color"/>
         <attr name="offset" format="dimension"/>
-        <attr name="radius" format="integer"/>
+        <attr name="radius"/>
         <attr name="scale" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="GestureLockView">
-        <attr name="radius" format="dimension"/>
+        <attr name="radius"/>
+        <attr name="pointSize" format="dimension"/>
         <attr name="pointColor" format="color"/>
+        <attr name="selectPointColor" format="color"/>
+        <attr name="errorPointColor" format="color"/>
         <attr name="circleColor" format="color"/>
         <attr name="pathColor" format="color"/>
         <attr name="errorPathColor" format="color"/>
