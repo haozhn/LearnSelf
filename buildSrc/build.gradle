@@ -4,6 +4,7 @@ dependencies {
     implementation gradleApi()
     implementation localGroovy()
     implementation 'com.android.tools.build:gradle:3.5.3'
+    implementation 'com.google.gradle:osdetector-gradle-plugin:1.6.0'
 }
 
 repositories {

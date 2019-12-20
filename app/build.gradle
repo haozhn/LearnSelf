@@ -42,3 +42,9 @@ dependencies {
     annotationProcessor project(':compiler')
     implementation project(':annotation')
 }
+
+tinkerPatch {
+    oldApk = 'oldApk'
+    outputFolder = 'outputFolder'
+    newApk = 'newApk'
+}
