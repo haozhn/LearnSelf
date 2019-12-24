@@ -27,6 +27,10 @@
         <activity android:name=".date_2019_12_20.HotfixTestActivity" />
         <activity android:name=".date_2019_12_24_10.TouchTestActivity" />
         <activity android:name=".date_2019_12_24_10.ScrollTouchTestActivity" />
+        <activity android:name=".date_2019_12_23.ProxyTestActivity"/>
+        <activity android:name=".date_2019_12_24.ActivityLifecycleTest" android:configChanges="orientation|screenSize"/>
+        <activity android:name=".date_2019_12_24.StandardActivity"/>
+        <activity android:name=".date_2019_12_24.TransparentActivity" android:theme="@android:style/Theme.Translucent"/>
     </application>
 
 </manifest>

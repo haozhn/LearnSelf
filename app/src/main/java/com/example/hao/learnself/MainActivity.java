@@ -4,17 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.TextView;
 
 import com.example.annotation.TestCompiler;
 import com.example.hao.learnself.date_2018_12_28.AnnotationTestActivity;
 import com.example.hao.learnself.date_2019_12_20.HotfixTestActivity;
+import com.example.hao.learnself.date_2019_12_23.RouterHandler;
+import com.example.hao.learnself.date_2019_12_23.RouterService;
+import com.example.hao.learnself.date_2019_12_24.ActivityLifecycleTest;
 import com.example.hao.learnself.date_2019_12_24_10.TouchTestActivity;
 import com.example.hao.learnself.date_2019_3_27.GaussianBlurActivity;
 import com.example.hao.learnself.date_2019_7_26.LockScreenActivity;
 
+import java.lang.reflect.Proxy;
+
 @TestCompiler
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
+    public static final String TAG = "haozhinan";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +30,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         findViewById(R.id.lock_screen_btn).setOnClickListener(this);
         findViewById(R.id.hotfix_btn).setOnClickListener(this);
         findViewById(R.id.touch_test_btn).setOnClickListener(this);
+        findViewById(R.id.proxy_btn).setOnClickListener(this);
+        findViewById(R.id.activity_lifecycle_btn).setOnClickListener(this);
     }
 
     @Override
@@ -43,6 +51,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.touch_test_btn:
                 startActivity(new Intent(this, TouchTestActivity.class));
+            case R.id.proxy_btn:
+                RouterService service = (RouterService) Proxy.newProxyInstance(RouterService.class.getClassLoader(),
+                        new Class[]{RouterService.class}, new RouterHandler(this));
+                service.gotoMain("I am from MainActivity");
+                break;
+            case R.id.activity_lifecycle_btn:
+                startActivity(new Intent(this, ActivityLifecycleTest.class));
                 break;
         }
     }
