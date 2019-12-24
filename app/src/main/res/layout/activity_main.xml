@@ -48,4 +48,14 @@
         android:textColor="@color/white"
         android:text="Hot Fix" />
 
+    <TextView
+        android:layout_marginTop="20dp"
+        android:background="@color/blue"
+        android:id="@+id/touch_test_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Touch Event" />
+
 </LinearLayout>

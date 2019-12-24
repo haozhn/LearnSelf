@@ -3,6 +3,7 @@ package com.example.hao.learnself;
 import android.content.Context;
 
 public class Util {
+    public static final String TAG = "haozhinan";
     private Util() {
     }
 

@@ -25,6 +25,8 @@
         <activity android:name=".date_2019_7_26.LockScreenActivity"/>
         <activity android:name=".date_2019_12_19.ASMTestActivity"/>
         <activity android:name=".date_2019_12_20.HotfixTestActivity" />
+        <activity android:name=".date_2019_12_24_10.TouchTestActivity" />
+        <activity android:name=".date_2019_12_24_10.ScrollTouchTestActivity" />
     </application>
 
 </manifest>

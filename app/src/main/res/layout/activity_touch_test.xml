@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp">
+
+    <com.example.hao.learnself.date_2019_12_24_10.TouchTextView
+        android:id="@+id/touch_1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue"
+        android:gravity="center"
+        android:text="NORMAL"
+        android:textColor="@color/white" />
+
+    <com.example.hao.learnself.date_2019_12_24_10.TouchTestLiearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <com.example.hao.learnself.date_2019_12_24_10.TouchTextView
+            android:id="@+id/touch_2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="ACTION_CANCEL"
+            android:textColor="@color/white" />
+
+    </com.example.hao.learnself.date_2019_12_24_10.TouchTestLiearLayout>
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:id="@+id/scroll_btn"
+        android:text="Scroll"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@color/blue"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+
+
+</LinearLayout>

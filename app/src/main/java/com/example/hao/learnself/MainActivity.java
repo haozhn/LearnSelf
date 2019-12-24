@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.annotation.TestCompiler;
 import com.example.hao.learnself.date_2018_12_28.AnnotationTestActivity;
 import com.example.hao.learnself.date_2019_12_20.HotfixTestActivity;
+import com.example.hao.learnself.date_2019_12_24_10.TouchTestActivity;
 import com.example.hao.learnself.date_2019_3_27.GaussianBlurActivity;
 import com.example.hao.learnself.date_2019_7_26.LockScreenActivity;
 
@@ -22,6 +23,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         findViewById(R.id.blur_btn).setOnClickListener(this);
         findViewById(R.id.lock_screen_btn).setOnClickListener(this);
         findViewById(R.id.hotfix_btn).setOnClickListener(this);
+        findViewById(R.id.touch_test_btn).setOnClickListener(this);
     }
 
     @Override
@@ -38,6 +40,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.hotfix_btn:
                 startActivity(new Intent(this, HotfixTestActivity.class));
+                break;
+            case R.id.touch_test_btn:
+                startActivity(new Intent(this, TouchTestActivity.class));
                 break;
         }
     }

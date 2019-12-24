@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:orientation="vertical">
+
+        <com.example.hao.learnself.date_2019_12_24_10.TouchTextView
+            android:id="@+id/touch_1"
+            android:layout_width="match_parent"
+            android:layout_marginTop="200dp"
+            android:layout_height="50dp"
+            android:background="@color/blue" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1000dp"/>
+
+    </LinearLayout>
+</ScrollView>
