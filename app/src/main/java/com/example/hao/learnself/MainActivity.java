@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.animation.Animation;
 
 import com.example.annotation.TestCompiler;
+import com.example.hao.learnself.date_19_12_25_22.AnimationTestActivity;
 import com.example.hao.learnself.date_2018_12_28.AnnotationTestActivity;
 import com.example.hao.learnself.date_2019_12_20.HotfixTestActivity;
 import com.example.hao.learnself.date_2019_12_23.RouterHandler;
@@ -32,6 +34,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         findViewById(R.id.touch_test_btn).setOnClickListener(this);
         findViewById(R.id.proxy_btn).setOnClickListener(this);
         findViewById(R.id.activity_lifecycle_btn).setOnClickListener(this);
+        findViewById(R.id.animation_btn).setOnClickListener(this);
     }
 
     @Override
@@ -58,6 +61,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.activity_lifecycle_btn:
                 startActivity(new Intent(this, ActivityLifecycleTest.class));
+                break;
+            case R.id.animation_btn:
+                startActivity(new Intent(this, AnimationTestActivity.class));
                 break;
         }
     }
