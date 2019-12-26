@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.animation.Animation;
 
 import com.example.annotation.TestCompiler;
 import com.example.hao.learnself.date_19_12_25_22.AnimationTestActivity;
@@ -14,6 +13,7 @@ import com.example.hao.learnself.date_2019_12_23.RouterHandler;
 import com.example.hao.learnself.date_2019_12_23.RouterService;
 import com.example.hao.learnself.date_2019_12_24.ActivityLifecycleTest;
 import com.example.hao.learnself.date_2019_12_24_10.TouchTestActivity;
+import com.example.hao.learnself.date_2019_12_25.ListViewReuseActivity;
 import com.example.hao.learnself.date_2019_3_27.GaussianBlurActivity;
 import com.example.hao.learnself.date_2019_7_26.LockScreenActivity;
 
@@ -35,6 +35,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         findViewById(R.id.proxy_btn).setOnClickListener(this);
         findViewById(R.id.activity_lifecycle_btn).setOnClickListener(this);
         findViewById(R.id.animation_btn).setOnClickListener(this);
+        findViewById(R.id.list_recycle_btn).setOnClickListener(this);
     }
 
     @Override
@@ -64,6 +65,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 break;
             case R.id.animation_btn:
                 startActivity(new Intent(this, AnimationTestActivity.class));
+                break;
+            case R.id.list_recycle_btn:
+                startActivity(new Intent(this, ListViewReuseActivity.class));
                 break;
         }
     }

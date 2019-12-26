@@ -1,92 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/annotation_btn"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Annotation"
-        android:textColor="@color/white" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/blur_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Blur"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/annotation_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Annotation"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/lock_screen_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Lock Screen"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/blur_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Blur"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/hotfix_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Hotfix"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/lock_screen_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Lock Screen"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/proxy_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Proxy"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/hotfix_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Hotfix"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/activity_lifecycle_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="ActivityLifeCycle"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/proxy_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Proxy"
+            android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/activity_lifecycle_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="ActivityLifeCycle"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/touch_test_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Touch Event"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/animation_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Animation"
+            android:textColor="@color/white" />
 
-    <TextView
-        android:id="@+id/animation_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/blue"
-        android:gravity="center"
-        android:text="Animation"
-        android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/touch_test_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Touch Event"
+            android:textColor="@color/white" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/list_recycle_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="List Recycle"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</ScrollView>

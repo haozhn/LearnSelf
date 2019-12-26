@@ -4,6 +4,7 @@
     package="com.example.hao.learnself">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".BaseApplication"
@@ -32,6 +33,7 @@
         <activity android:name=".date_2019_12_24.StandardActivity"/>
         <activity android:name=".date_2019_12_24.TransparentActivity" android:theme="@android:style/Theme.Translucent"/>
         <activity android:name=".date_19_12_25_22.AnimationTestActivity"/>
+        <activity android:name=".date_2019_12_25.ListViewReuseActivity"/>
     </application>
 
 </manifest>
