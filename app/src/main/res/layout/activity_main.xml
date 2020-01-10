@@ -102,5 +102,25 @@
             android:gravity="center"
             android:text="List Recycle"
             android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/handler_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Handler"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/jetpack_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Jetpack"
+            android:textColor="@color/white" />
     </LinearLayout>
 </ScrollView>

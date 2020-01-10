@@ -1,8 +1,8 @@
 package com.example.hao.learnself.date_2018_12_28;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 public abstract class BaseActivity extends FragmentActivity {
     @Override

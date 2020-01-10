@@ -2,7 +2,7 @@ package com.example.hao.learnself.date_19_12_25_22;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -12,6 +12,7 @@ import com.example.hao.learnself.R;
 
 public class AnimationTestActivity extends Activity implements View.OnClickListener {
     private TextView translateBtn;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

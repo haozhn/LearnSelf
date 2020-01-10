@@ -34,6 +34,9 @@
         <activity android:name=".date_2019_12_24.TransparentActivity" android:theme="@android:style/Theme.Translucent"/>
         <activity android:name=".date_19_12_25_22.AnimationTestActivity"/>
         <activity android:name=".date_2019_12_25.ListViewReuseActivity"/>
+        <activity android:name=".date_19_12_27.HandlerActivity" />
+        <activity android:name="com.haozhn.learnself.jetpack.JetpackActivity" />
+        <service android:name=".date_19_12_27.MyIntentService"/>
     </application>
 
 </manifest>

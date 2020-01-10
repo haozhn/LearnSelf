@@ -14,4 +14,37 @@
         android:text="Translate"
         android:textColor="@color/white" />
 
+    <RelativeLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:background="#eeeeee"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/animation_btn_1"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="属性动画"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:text="Test"
+            android:layout_toRightOf="@id/animation_btn_1"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/test_image"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_width="80dp"
+        android:layout_height="34dp"/>
+
 </LinearLayout>

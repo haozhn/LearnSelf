@@ -2,7 +2,7 @@ package com.example.hao.learnself.date_2019_12_25;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;

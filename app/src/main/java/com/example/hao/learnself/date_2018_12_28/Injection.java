@@ -1,7 +1,7 @@
 package com.example.hao.learnself.date_2018_12_28;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import java.lang.reflect.Constructor;

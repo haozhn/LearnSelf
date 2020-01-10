@@ -1,7 +1,7 @@
 package com.example.hao.learnself.date_2019_12_24_10;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
